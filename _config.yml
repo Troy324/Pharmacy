@@ -1,0 +1,81 @@
+import java.util.HashMap;
+import java.util.Map;
+
+class Apteka {
+    // Поля класса
+    private String name;                          // Название аптеки
+    private Map<String, Double> medicines;       // Названия лекарств и их стоимость
+
+    // Конструктор
+    public Apteka() {
+        medicines = new HashMap<>();
+    }
+
+    // Метод инициализации всех полей
+    public void init(String name, Map<String, Double> medicines) {
+        this.name = name;
+        this.medicines = medicines;
+    }
+
+    // Метод получения полной информации об аптеке
+    public String getInfo() {
+        StringBuilder info = new StringBuilder("Аптека: " + name + "\nЛекарства:\n");
+        for (Map.Entry<String, Double> entry : medicines.entrySet()) {
+            info.append(" - ").append(entry.getKey()).append(": ").append(entry.getValue()).append(" дол.\n");
+        }
+        return info.toString();
+    }
+
+    // Метод для выяснения стоимости самого дорогого лекарства
+    public double getMostExpensiveMedicine() {
+        double maxPrice = 0;
+        for (double price : medicines.values()) {
+            if (price > maxPrice) {
+                maxPrice = price;
+            }
+        }
+        return maxPrice;
+    }
+
+    // Метод для нахождения стоимости всех лекарств
+    public double getTotalCost() {
+        double total = 0;
+        for (double price : medicines.values()) {
+            total += price;
+        }
+        return total;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Создание объектов класса Apteka
+        Apteka apteka1 = new Apteka();
+        Apteka apteka2 = new Apteka();
+
+        // Инициализация полей аптек
+        Map<String, Double> medicines1 = new HashMap<>();
+        medicines1.put("Авелокс", 70.0);
+        medicines1.put("Биотин", 30.0);
+        medicines1.put("Бетоптик", 100.0);
+        apteka1.init("Аптека №1", medicines1);
+
+        Map<String, Double> medicines2 = new HashMap<>();
+        medicines2.put("Визомитин", 120.0);
+        medicines2.put("Неванак", 40.0);
+        medicines2.put("Орнидазол", 96.0);
+        apteka2.init("Аптека №2", medicines2);
+
+        // Получение полной информации об аптеке
+        System.out.println(apteka1.getInfo());
+        System.out.println(apteka2.getInfo());
+
+        // Выяснение стоимости самого дорогого лекарства
+        System.out.println("Самое дорогое лекарство в " + apteka1.getInfo().split("\n")[0] + ": " + apteka1.getMostExpensiveMedicine() + " дол.");
+        System.out.println("Самое дорогое лекарство в " + apteka2.getInfo().split("\n")[0] + ": " + apteka2.getMostExpensiveMedicine() + " дол.");
+
+        // Нахождение стоимости всех лекарств
+        System.out.println("Общая стоимость всех лекарств в " + apteka1.getInfo().split("\n")[0] + ": " + apteka1.getTotalCost() + " дол.");
+        System.out.println("Общая стоимость всех лекарств в " + apteka2.getInfo().split("\n")[0] + ": " + apteka2.getTotalCost() + " дол.");
+    }
+}
